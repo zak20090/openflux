@@ -30,6 +30,8 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         stateText = findViewById(R.id.stateText);
         findViewById(R.id.connectButton).setOnClickListener(v -> connect());
+        findViewById(R.id.editProfileButton).setOnClickListener(v ->
+                startActivity(new Intent(this, ProfileEditorActivity.class)));
         findViewById(R.id.disconnectButton).setOnClickListener(v -> disconnect());
         if (Build.VERSION.SDK_INT >= 33) {
             requestPermissions(new String[]{"android.permission.POST_NOTIFICATIONS"}, 2);

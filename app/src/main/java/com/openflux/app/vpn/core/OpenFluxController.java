@@ -5,6 +5,8 @@ import android.util.Log;
 import com.openflux.app.vpn.util.RetryPolicy;
 
 import java.io.IOException;
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /** Управляет жизненным циклом адаптера и переподключением с экспоненциальным backoff. */
@@ -24,6 +26,7 @@ public class OpenFluxController {
     private final StateListener listener;
     private final AtomicBoolean running = new AtomicBoolean(false);
 
+    private final Semaphore wake = new Semaphore(0);
     private Thread worker;
     private volatile ConnectionState state = ConnectionState.DISCONNECTED;
 
@@ -78,13 +81,29 @@ public class OpenFluxController {
             adapter.sendPacket(packet, length);
         } catch (IOException e) {
             Log.w(TAG, "sendPacket failed: " + e.getMessage());
+            requestReconnect();
         }
+    }
+
+    /**
+     * Принудительно разорвать текущее соединение и переподключиться без ожидания backoff
+     * (смена сети, ошибка отправки/чтения).
+     */
+    public void requestReconnect() {
+        if (!running.get()) return;
+        try {
+            adapter.disconnect();
+        } catch (RuntimeException e) {
+            Log.w(TAG, "disconnect failed", e);
+        }
+        wake.release();
     }
 
     private void run() {
         int attempt = 0;
         boolean first = true;
         while (running.get()) {
+            wake.drainPermits();
             setState(first ? ConnectionState.CONNECTING : ConnectionState.RECONNECTING);
             try {
                 adapter.init(config, protectProvider, inboundCallback);
@@ -92,9 +111,9 @@ public class OpenFluxController {
                 setState(ConnectionState.CONNECTED);
                 attempt = 0;
                 first = false;
-                // Ждём потери соединения (в заглушке — до остановки).
+                // Ждём потери соединения (drop транспорта виден через isConnected()).
                 while (running.get() && adapter.isConnected()) {
-                    Thread.sleep(1000);
+                    wake.tryAcquire(500, TimeUnit.MILLISECONDS);
                 }
                 if (!running.get()) break;
                 adapter.disconnect();
@@ -109,7 +128,8 @@ public class OpenFluxController {
             setState(ConnectionState.RECONNECTING);
             long delay = retryPolicy.nextDelayMs(attempt++);
             try {
-                Thread.sleep(delay);
+                // requestReconnect() (например, смена сети) прерывает ожидание backoff.
+                if (wake.tryAcquire(delay, TimeUnit.MILLISECONDS)) attempt = 0;
             } catch (InterruptedException e) {
                 break;
             }
