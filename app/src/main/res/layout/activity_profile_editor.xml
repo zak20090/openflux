@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <EditText
+            android:id="@+id/f_host"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Host"
+            android:importantForAutofill="no"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/f_port"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Port"
+            android:importantForAutofill="no"
+            android:inputType="number" />
+
+        <EditText
+            android:id="@+id/f_transport"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Transport (tcp|tls)"
+            android:importantForAutofill="no"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/f_authToken"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Auth token (secret)"
+            android:importantForAutofill="no"
+            android:inputType="textPassword" />
+
+        <EditText
+            android:id="@+id/f_privateKey"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Private key (secret)"
+            android:importantForAutofill="no"
+            android:inputType="textPassword" />
+
+        <EditText
+            android:id="@+id/f_publicKey"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Public key"
+            android:importantForAutofill="no"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/f_keyRef"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Key reference"
+            android:importantForAutofill="no"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/f_sni"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="TLS SNI"
+            android:importantForAutofill="no"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/f_alpn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="TLS ALPN (comma-separated)"
+            android:importantForAutofill="no"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/f_mtu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="MTU"
+            android:importantForAutofill="no"
+            android:inputType="number" />
+
+        <EditText
+            android:id="@+id/f_dns"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="DNS (comma-separated, v4/v6)"
+            android:importantForAutofill="no"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/f_routes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Routes (CIDR, comma-separated; split mode)"
+            android:importantForAutofill="no"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/f_tunAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="TUN IPv4 address"
+            android:importantForAutofill="no"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/f_tunPrefix"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="TUN IPv4 prefix"
+            android:importantForAutofill="no"
+            android:inputType="number" />
+
+        <EditText
+            android:id="@+id/f_tunAddress6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="TUN IPv6 address"
+            android:importantForAutofill="no"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/f_tunPrefix6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="TUN IPv6 prefix"
+            android:importantForAutofill="no"
+            android:inputType="number" />
+
+        <EditText
+            android:id="@+id/f_connectTimeoutMs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Connect timeout, ms"
+            android:importantForAutofill="no"
+            android:inputType="number" />
+
+        <EditText
+            android:id="@+id/f_readTimeoutMs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Read timeout, ms"
+            android:importantForAutofill="no"
+            android:inputType="number" />
+
+        <EditText
+            android:id="@+id/f_keepaliveMs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Keepalive, ms"
+            android:importantForAutofill="no"
+            android:inputType="number" />
+
+        <CheckBox
+            android:id="@+id/f_fullTunnel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Full tunnel (all traffic)" />
+
+        <CheckBox
+            android:id="@+id/f_killSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Kill-switch (block traffic while tunnel is down)" />
+
+        <Button
+            android:id="@+id/saveButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/save" />
+    </LinearLayout>
+</ScrollView>

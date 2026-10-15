@@ -26,5 +26,9 @@ android {
 }
 
 dependencies {
-    // TODO: добавить зависимость на реальный OpenFlux SDK, когда он будет доступен.
+    // OpenFlux SDK: локальный модуль-референс. Для внешнего SDK замените на
+    // implementation 'com.openflux:openflux-sdk:<version>' и добавьте его Maven-репозиторий
+    // в dependencyResolutionManagement (settings.gradle).
+    implementation project(':openflux-sdk')
+    implementation 'androidx.security:security-crypto:1.1.0-alpha06'
 }

@@ -4,4 +4,6 @@
     <string name="disconnect">Disconnect</string>
     <string name="notif_channel">VPN status</string>
     <string name="notif_title">OpenFlux VPN</string>
+    <string name="edit_profile">Edit profile</string>
+    <string name="save">Save</string>
 </resources>
